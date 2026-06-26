@@ -24,39 +24,53 @@
       class="container vh-100 d-flex justify-content-center align-items-center"
     >
       <div class="card p-5">
-        <h2 class="text-center mb-4">Weather App</h2>
+        <div class="card-body">
 
-        <form action="/" method="POST">
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              name="city"
-              class="form-control"
-              placeholder="Enter city"
-              required
-            />
+          <form class="mb-5" action="/" method="POST">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                name="city"
+                class="form-control"
+                placeholder="Enter city"
+                required
+              />
+  
+              <button
+                type="submit"
+                class="btn btn-dark form-submit"
+              >
+                Search
+              </button>
+            </div>
+          </form>
 
-            <button
-              type="submit"
-              class="btn btn-primary form-submit"
-            >
-              Search
-            </button>
+          <div class="text-start mb-5">
+            <h2>Today</h2>
+            <% if(weather) { %>
+              <h4 class="card-title text-secondary"><%= weather.name %></h4>
+              <div class="my-2">
+                <h1><%= weather.temperature %> °C</h1>
+                <p class="text-muted">Feels like: <%= weather.feels_like %> °C</p>
+              </div>
+            <% } %>
           </div>
-        </form>
+  
+          <% if (weather) { %>
+          <div class="d-flex flex-column align-items-start mt-4 gap-1">
 
-        <% if (weather) { %>
-        <div class="d-flex flex-column align-items-start mt-4 gap-1">
-          <h4><%= weather.name %></h4>
-          <div>Temperature: <%= weather.temperature %> °C</div>
-          <div>Weather: <%= weather.description %></div>
-          <div>Feels Like: <%= weather.feels_like %> °C</div>
+            <div>Weather: <%= weather.main %></div>
+            <div>Description: <%= weather.description %></div>
+            <div>Temperature: <%= weather.temperature %> °C</div>
+            <div>Feels Like: <%= weather.feels_like %> °C</div>
+          </div>
+          <% } else if (error) { %>
+          <div class="error-message text-center">
+            <p><%= error %></p>
+          </div>
+          <% } %>
         </div>
-        <% } else if (error) { %>
-        <div class="error-message text-center">
-          <p><%= error %></p>
-        </div>
-        <% } %>
+
       </div>
     </div>
 

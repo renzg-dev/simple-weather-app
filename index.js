@@ -13,6 +13,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
+app.get("/", (req, res) => {
+  res.render("index.ejs", { weather: null, error: null });
+});
+
 app.post("/", async (req, res) => {
   const city = req.body.city;
   console.log(`Received city: ${city}`);
@@ -25,6 +29,7 @@ app.post("/", async (req, res) => {
 
   try {
     const response = await axios.get(url);
+    // console.log("API response:", response.data);
 
     const description =
       response.data.weather[0].description;
@@ -35,12 +40,13 @@ app.post("/", async (req, res) => {
     const weatherData = {
       name: response.data.name,
       temperature: response.data.main.temp,
+      main: response.data.weather[0].main,
       description: capitalizedDescription,
       icon: response.data.weather[0].icon,
       feels_like: response.data.main.feels_like,
     };
 
-    console.log("Weather data:", weatherData);
+    // console.log("Weather data:", weatherData);
 
     res.render("index.ejs", {
       weather: weatherData,
